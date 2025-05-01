@@ -5,15 +5,15 @@
 <h1>Role</h1>
 <p>
   1. Admin
-      - Melihat user lain, menghapus user lain, menghapus produk yang dijual dan memvalidasi pembayaran.
+      <li>AkunMarket</li>
     <br>
   2. Seller
-      - Melihat, Menambah, Mengedit, Menghapus produk.
-      - Melihat daftar produk yang dijual.
+      <li>Melihat, Menambah, Mengedit, Menghapus produk.</li>
+      <li> Melihat daftar produk yang dijual.</li>
     <br>
   3. Costumer
-      - Melihat produk yang dijual oleh seller.
-      - Melakukan pembelian produk.
+      <li>Melihat produk yang dijual oleh seller.</li>
+      <li> Melakukan pembelian produk.</li>
 </p><br>
 
 <h1>Tabel dan Field</h1>
