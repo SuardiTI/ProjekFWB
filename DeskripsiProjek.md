@@ -6,13 +6,15 @@
 <p>
   1. Admin
       - Melihat user lain, menghapus user lain, menghapus produk yang dijual dan memvalidasi pembayaran.
+    <br>
   2. Seller
       - Melihat, Menambah, Mengedit, Menghapus produk.
       - Melihat daftar produk yang dijual.
+    <br>
   3. Costumer
       - Melihat produk yang dijual oleh seller.
       - Melakukan pembelian produk.
-</p>
+</p><br>
 
 <h1>Tabel dan Field</h1>
 
