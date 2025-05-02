@@ -5,7 +5,7 @@
 <h1>Role</h1>
 <p>
   1. Admin
-      <li>AkunMarket</li>
+      <li>Melihat user lain yang memiliki akun, menghapus akun seller dan costumer, menghapus produk yang dipost oleh seller, dan memverifikasi pembayaran</li>
     <br>
   2. Seller
       <li>Melihat, Menambah, Mengedit, Menghapus produk.</li>
