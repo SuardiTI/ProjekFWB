@@ -1,66 +1,419 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<center>
+<h1>AkunMarket</h1>
+<h3>Website Jual Beli Akun Game Dan Joki</h3>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Logo Unsulbar](public/image.png)
 
-## About Laravel
+<h3>Suardi</h3>
+<h3>D0223006</h3><br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h3>FRAMEWORK WEB BASED</h3>
+<h3>2025</h3>
+</center><br><br>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<center><h2>ROLE DAN FITUR-FITURNYA</h2></center>
+<ul>
+  <li>Admin
+    <ol>
+        <li>Melihat user lain yang memiliki akun di database</li>
+        <li>Menghapus akun penjual atau pembeli</li>
+         <li>Menghapus produk yang di post oleh penjual</li>
+        <li>Memverifikasi pembayaran</li>
+    </ol>
+  </li>
+  <li>Penjual</li>
+    <ol>
+        <li>Melihat, Menambah, Mengedit, Menghapus produk</li>
+        <li>Melihat daftar produk yang dijual</li>
+        <li>Mendapatkan informasi akun costumer yang akan di joki</li>
+    </ol>
+  <li>Pembeli</li>
+    <ol>
+        <li>Melihat produk yang dijual oleh seller</li>
+        <li>Melakukan pembelian produk</li>
+        <li>Mengisi detail akun yang akan di joki oleh penjual</li>
+    </ol>
+</ul><br><br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<center><h2>TABEL-TABEL DATABASE BESERTA FIELD DAN TIPE DATANYA </h2></center>
+<ol>
+    <li>pengguna</li>
+<table>
+  <thead>
+    <tr>
+      <th>Nama field</th>
+      <th>Tipe data</th>
+      <th>keterangan</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+    <tr>
+      <td>name</td>
+      <td>string</td>
+      <td>nama pengguna</td>
+    </tr>
+    <tr>
+      <td>email</td>
+      <td>string</td>
+      <td>email pengguna</td>
+    </tr>
+    <tr>
+      <td>password</td>
+      <td>string</td>
+      <td>password pengguna</td>
+    </tr>
+     <tr>
+      <td>role</td>
+      <td>enum('admin', 'penjual', 'pembeli')</td>
+      <td>role pengguna (admin, penjual, pembeli)</td>
+    </tr>
+  </tbody>
+</table><br>
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<li>produk</li>
+ <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>pengguna_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel pengguna</td>
+      </tr>
+      <tr>
+        <td>kategori</td>
+        <td>enum('akun', 'joki')</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>nama_game</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>deskripsi</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>harga</td>
+        <td>decimal(10, 2)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>status</td>
+        <td>enum('tersedia', 'terjual')</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  <li>produk_gambar</li>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>produk_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel produk</td>
+      </tr>
+      <tr>
+        <td>path_gambar</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  <li>orders</li>
+   <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>pengguna_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel pengguna</td>
+      </tr>
+      <tr>
+        <td>produk_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel produk</td>
+      </tr>
+      <tr>
+        <td>total_harga</td>
+        <td>decimal(10, 2)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>status</td>
+        <td>enum('pending', 'gagal', 'selesai')</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-## Laravel Sponsors
+   <li>transaksi</li>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>order_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel orders</td>
+      </tr>
+      <tr>
+        <td>metode_pembayaran</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>status_pembayaran</td>
+        <td>enum('pending', 'berhasil', 'gagal')</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>jumlah_dibayar</td>
+        <td>decimal(10, 2)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>bukti_pembayaran</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>tanggal_pembayaran</td>
+        <td>date</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+   <li>akun_digital</li>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>produk_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel produk</td>
+      </tr>
+      <tr>
+        <td>username</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+  <li>detail_joki</li>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>order_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel orders</td>
+      </tr>
+      <tr>
+        <td>username_game</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>password_game</td>
+        <td>string</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>instruksi</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>status_pekerjaan</td>
+        <td>enum('belum_mulai', 'proses', 'selesai')</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table><br>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   <li>reviews</li>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama field</th>
+        <th>Tipe data</th>
+        <th>keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td>bigint unsigned</td>
+        <td>Primary Key</td>
+      </tr>
+      <tr>
+        <td>pengguna_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel pengguna</td>
+      </tr>
+      <tr>
+        <td>produk_id</td>
+        <td>bigint unsigned</td>
+        <td>Foreign Key ke tabel produk</td>
+      </tr>
+      <tr>
+        <td>rating</td>
+        <td>decimal</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ulasan</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</ol><br><br>
 
-## Code of Conduct
+<center><h2>JENIS RELASI DAN TABEL YANG BERELASI</h2></center>
+<li>One To Many</li>
+<li>One To One</li>
+<br>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<ol>
+  <li>Pengguna memiliki banyak Produk
+    <ul>
+      <li>Pengguna hasMany Produk</li>
+      <li>Produk belongsTo Pengguna</li>
+    </ul>
+  </li>
+  <li>Pengguna memiliki banyak Order
+    <ul>
+      <li>Pengguna hasMany Order</li>
+      <li>Order belongsTo Pengguna</li>
+    </ul>
+  </li>
+  <li>Pengguna memiliki banyak Review
+    <ul>
+      <li>Pengguna hasMany Review</li>
+      <li>Review belongsTo Pengguna</li>
+    </ul>
+  </li>
+  <li>Produk memiliki banyak ProdukGambar
+    <ul>
+      <li>Produk hasMany ProdukGambar</li>
+      <li>ProdukGambar belongsTo Produk</li>
+    </ul>
+  </li>
+  <li>Produk memiliki banyak Review
+    <ul>
+      <li>Produk hasMany Review</li>
+      <li>Review belongsTo Produk</li>
+    </ul>
+  </li>
+  <li>Produk dimiliki oleh banyak Order
+    <ul>
+      <li>Produk hasMany Order</li>
+      <li>Order belongsTo Produk</li>
+    </ul>
+  </li>
+  <li>Produk memiliki satu AkunDigital
+    <ul>
+      <li>Produk hasOne AkunDigital</li>
+      <li>AkunDigital belongsTo Produk</li>
+    </ul>
+  </li>
+  <li>Order memiliki satu Transaksi
+    <ul>
+      <li>Order hasOne Transaksi</li>
+      <li>Transaksi belongsTo Order</li>
+    </ul>
+  </li>
+  <li>Order memiliki satu DetailJoki
+    <ul>
+      <li>Order hasOne DetailJoki</li>
+      <li>DetailJoki belongsTo Order</li>
+    </ul>
+  </li>
+</ol>
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
