@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 <h1>AkunMarket</h1>
 <h3>Website Jual Beli Akun Game Dan Joki</h3>
 
@@ -9,9 +9,9 @@
 
 <h3>FRAMEWORK WEB BASED</h3>
 <h3>2025</h3>
-</center><br><br>
-
-<center><h2>ROLE DAN FITUR-FITURNYA</h2></center>
+<br><br>
+</div>
+<h2 align = "center">ROLE DAN FITUR-FITURNYA</h2>
 <ul>
   <li>Admin
     <ol>
@@ -35,7 +35,7 @@
     </ol>
 </ul><br><br>
 
-<center><h2>TABEL-TABEL DATABASE BESERTA FIELD DAN TIPE DATANYA </h2></center>
+<h2 align= "center">TABEL-TABEL DATABASE BESERTA FIELD DAN TIPE DATANYA </h2>
 <ol>
     <li>pengguna</li>
 <table>
@@ -355,7 +355,7 @@
   </table>
 </ol><br><br>
 
-<center><h2>JENIS RELASI DAN TABEL YANG BERELASI</h2></center>
+<h2 align="center">JENIS RELASI DAN TABEL YANG BERELASI</h2>
 <li>One To Many</li>
 <li>One To One</li>
 <br>
