@@ -9,13 +9,13 @@ class Review extends Model
 
     protected $table = 'reviews';
 
-    protected $fillable = ['pengguna_id','produk_id','produk_id','rating','ulasan'];
+    protected $fillable = ['user_id','produk_id','produk_id','rating','ulasan'];
 
     public function produk() {
         return $this->belongsTo(Produk::class, 'produk_id','id');
     }
 
     public function pengguna() {
-        return $this->belongsTo(Pengguna::class, 'pengguna_id','id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 }

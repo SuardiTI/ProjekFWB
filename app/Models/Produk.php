@@ -8,10 +8,10 @@ class Produk extends Model
 {
     protected $table = 'produk';
 
-    protected $fillable = ['pengguna_id', 'kategori', 'nama_game', 'deskripsi', 'harga','status'];
+    protected $fillable = ['user_id', 'kategori', 'nama_game', 'deskripsi', 'harga','status'];
 
     public function pengguna() {
-        return $this->belongsTo(Pengguna::class, 'pengguna_id','id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 
     public function gambar() {

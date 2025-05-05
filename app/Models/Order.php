@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $table = 'orders';
-    protected $fillable = ['pengguna_id', 'produk_id', 'total_harga', 'status'];
+    protected $fillable = ['user_id', 'produk_id', 'total_harga', 'status'];
 
     public function pembeli() {
-        return $this->belongsTo(Pengguna::class, 'pengguna_id','id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 
     public function produk() {
