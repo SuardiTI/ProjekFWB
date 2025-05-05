@@ -37,7 +37,7 @@
 
 <h2 align= "center">TABEL-TABEL DATABASE BESERTA FIELD DAN TIPE DATANYA </h2>
 <ol>
-    <li>pengguna</li>
+    <li>users</li>
 <table>
   <thead>
     <tr>
@@ -92,9 +92,9 @@
         <td>Primary Key</td>
       </tr>
       <tr>
-        <td>pengguna_id</td>
+        <td>user_id</td>
         <td>bigint unsigned</td>
-        <td>Foreign Key ke tabel pengguna</td>
+        <td>Foreign Key ke tabel users</td>
       </tr>
       <tr>
         <td>kategori</td>
@@ -168,9 +168,9 @@
         <td>Primary Key</td>
       </tr>
       <tr>
-        <td>pengguna_id</td>
+        <td>user_id</td>
         <td>bigint unsigned</td>
-        <td>Foreign Key ke tabel pengguna</td>
+        <td>Foreign Key ke tabel users</td>
       </tr>
       <tr>
         <td>produk_id</td>
@@ -332,9 +332,9 @@
         <td>Primary Key</td>
       </tr>
       <tr>
-        <td>pengguna_id</td>
+        <td>user_id</td>
         <td>bigint unsigned</td>
-        <td>Foreign Key ke tabel pengguna</td>
+        <td>Foreign Key ke tabel users</td>
       </tr>
       <tr>
         <td>produk_id</td>
@@ -361,22 +361,22 @@
 <br>
 
 <ol>
-  <li>Pengguna memiliki banyak Produk
+  <li>User memiliki banyak Produk
     <ul>
-      <li>Pengguna hasMany Produk</li>
-      <li>Produk belongsTo Pengguna</li>
+      <li>User hasMany Produk</li>
+      <li>Produk belongsTo User</li>
     </ul>
   </li>
-  <li>Pengguna memiliki banyak Order
+  <li>User memiliki banyak Order
     <ul>
-      <li>Pengguna hasMany Order</li>
-      <li>Order belongsTo Pengguna</li>
+      <li>User hasMany Order</li>
+      <li>Order belongsTo User</li>
     </ul>
   </li>
-  <li>Pengguna memiliki banyak Review
+  <li>User memiliki banyak Review
     <ul>
-      <li>Pengguna hasMany Review</li>
-      <li>Review belongsTo Pengguna</li>
+      <li>User hasMany Review</li>
+      <li>Review belongsTo User</li>
     </ul>
   </li>
   <li>Produk memiliki banyak ProdukGambar
