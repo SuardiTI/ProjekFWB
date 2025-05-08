@@ -5,23 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Produk_gambar extends Model
 {
-    /** @use HasFactory<\Database\Factories\ReviewFactory> */
+    /** @use HasFactory<\Database\Factories\ProdukGambarFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'product_id',
-        'rating',
-        'ulasan',
+        'produk_id',
+        'path_gambar'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class); // Reviewer
-    }
-
     public function produk()
     {
         return $this->belongsTo(Produk::class);

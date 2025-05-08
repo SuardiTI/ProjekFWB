@@ -16,19 +16,33 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $table = 'users';
-    protected $fillable = ['name', 'email', 'password', 'role'];
+    protected $fillable = [
+        'name', 
+        'email', 
+        'password', 
+        'role'
+    ];
 
-    public function produk() {
-        return $this->hasMany(Produk::class, 'user_id','id');
+    use HasFactory;
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class);
     }
 
-    public function orders() {
-        return $this->hasMany(Order::class, 'user_id','id');
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
-    public function reviews() {
-        return $this->hasMany(Review::class, 'user_id','id');
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function transaksi()
+    {
+        return $this->belongsToMany(Transaksi::class, 'user_transaksis')->withTimestamps();
     }
 
     /**
@@ -37,8 +51,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        // 'password',
+        // 'remember_token',
     ];
 
     /**
@@ -49,8 +63,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            // 'email_verified_at' => 'datetime',
+            // 'password' => 'hashed',
         ];
     }
 }

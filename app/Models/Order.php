@@ -2,26 +2,42 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $table = 'orders';
-    protected $fillable = ['user_id', 'produk_id', 'total_harga', 'status'];
+    /** @use HasFactory<\Database\Factories\OrderFactory> */
+    use HasFactory;
 
-    public function pembeli() {
-        return $this->belongsTo(User::class, 'user_id','id');
+    protected $fillable = [
+        'user_id',
+        'produk_id',
+        'kontak_pembeli',
+        'total_harga',
+        'status',
+        'konfirmasi_admin',
+        'status_pengiriman',
+        'konfirmasi_customer'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // Pembeli
     }
 
-    public function produk() {
-        return $this->belongsTo(Produk::class, 'produk_id','id');
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
     }
 
-    public function transaksi() {
-        return $this->hasOne(Transaksi::class, 'order_id','id');
+    public function transaksi()
+    {
+        return $this->hasOne(Transaksi::class);
     }
 
-    public function jokiDetail() {
-        return $this->hasOne(DetailJoki::class, 'order_id','id');
+    public function detailJoki()
+    {
+        return $this->hasOne(Detail_joki::class);
     }
 }

@@ -2,31 +2,40 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
 {
-    protected $table = 'produk';
+    /** @use HasFactory<\Database\Factories\ProdukFactory> */
+    use HasFactory;
 
-    protected $fillable = ['user_id', 'kategori', 'nama_game', 'deskripsi', 'harga','status'];
+    protected $fillable = [
+        'user_id',
+        'kategori',
+        'nama_game',
+        'deskripsi',
+        'harga',
+        'status'
+    ];
 
-    public function pengguna() {
-        return $this->belongsTo(User::class, 'user_id','id');
+    public function user()
+    {
+        return $this->belongsTo(User::class); // Penjual
     }
 
-    public function gambar() {
-        return $this->hasMany(ProdukGambar::class, 'produk_id','id');
+    public function gambar()
+    {
+        return $this->hasMany(Produk_gambar::class);
     }
 
-    public function orders() {
-        return $this->hasMany(Order::class, 'produk_id','id');
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
-    public function akunDigital() {
-        return $this->hasOne(AkunDigital::class, 'produk_id','id');
-    }
-
-    public function reviews() {
-        return $this->hasMany(Review::class, 'produk_id','id');
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
