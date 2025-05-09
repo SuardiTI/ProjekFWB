@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Penjual
             $table->enum('kategori', ['akun', 'joki']);
             $table->string('nama_game');
-            $table->string('gambar_game')->nullable();
             $table->text('deskripsi');
             $table->decimal('harga', 10, 2);
             $table->enum('status', ['tersedia', 'terjual'])->default('tersedia');

@@ -13,7 +13,6 @@ class Produk extends Model
     protected $fillable = [
         'user_id',
         'kategori',
-        'gambar_game',
         'nama_game',
         'deskripsi',
         'harga',
