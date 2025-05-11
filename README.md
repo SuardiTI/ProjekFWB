@@ -356,6 +356,7 @@
 </ol><br><br>
 
 <h2 align="center">JENIS RELASI DAN TABEL YANG BERELASI</h2>
+<li>Many To Many</li>
 <li>One To Many</li>
 <li>One To One</li>
 <br>
@@ -775,3 +776,14 @@
         </tbody>
     </table><br>
 </ol>
+
+<h2 align="center">TABEL YANG BERELASI</h2>
+<li>User one to many Produk</li>
+<li>User one to many Order</li>
+<li>User one to many Review</li>
+<li>User many to many Transaksi (via pivot user_transaksis)</li>
+<li>Produk one to many Order</li>
+<li>Produk one to many Review</li>
+<li>Order one to one Transaksi</li>
+<li>Order one to one Detail Joki</li>
+<li>Transaksi many to many User (via pivot user_transaksis)</li>
