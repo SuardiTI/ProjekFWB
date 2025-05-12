@@ -468,43 +468,6 @@
             </tr>
         </tbody>
     </table><br>
-    <li>produk_gambars</li>
-    <table>
-        <thead>
-            <tr>
-                <th>Nama field</th>
-                <th>Tipe data</th>
-                <th>Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>id</td>
-                <td>bigint unsigned</td>
-                <td>Primary Key</td>
-            </tr>
-            <tr>
-                <td>produk_id</td>
-                <td>bigint unsigned</td>
-                <td>Foreign Key ke tabel produks</td>
-            </tr>
-            <tr>
-                <td>path_gambar</td>
-                <td>string</td>
-                <td>Path/lokasi file gambar produk</td>
-            </tr>
-             <tr>
-                <td>created_at</td>
-                <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
-            </tr>
-             <tr>
-                <td>updated_at</td>
-                <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
-            </tr>
-        </tbody>
-    </table><br>
     <li>orders</li>
     <table>
         <thead>
