@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail_joki;
+use App\Models\Order;
 use App\Models\Produk;
 use App\Models\Produk_gambar;
 // use Illuminate\Container\Attributes\Auth;
@@ -10,10 +12,27 @@ use Illuminate\Support\Facades\Auth;
 
 class PenjualController extends Controller
 {
+  // public function lihat()
+  // {
+  //   $produk = Produk::with('user')->where('user_id', Auth::user()->id)->get();
+  //   return view('seller.lihatProduk', compact('produk'));
+  // }
   public function lihat()
   {
-    $produk = Produk::with('user')->where('user_id', Auth::user()->id)->get();
+    $produk = Produk::where('status', 'tersedia')
+      ->where('user_id', Auth::user()->id)
+      ->orderBy('updated_at', 'desc')
+      ->get();
     return view('seller.lihatProduk', compact('produk'));
+  }
+
+  public function lihatProdukTerjual()
+  {
+    $produkTerjual = Produk::where('status', 'terjual')
+      ->where('user_id', Auth::user()->id)
+      ->orderBy('updated_at', 'desc')
+      ->get();
+    return view('seller.produkTerjual', compact('produkTerjual'));
   }
 
   public function lihattmbh()
@@ -84,11 +103,52 @@ class PenjualController extends Controller
     return redirect()->route('lihat')->with('success', 'Produk berhasil Dihapus');
   }
 
-  public function listjoki()
+  public function listCekout()
   {
-    return view('seller.listJoki');
+    $order = Order::with(['transaksi','user','produk'])
+          ->whereHas('produk', function($query) {
+              $query->where('kategori', 'akun');
+          })
+          ->orderBy('created_at', 'asc')
+          ->get();
+
+    return view('seller.listCekout', compact('order'));
   }
 
-  
-    
+  public function kirimAkun($id)
+  {
+    $akun = Order::findOrFail($id);
+    $akun->status_pengiriman = 'sudah_dikirim';
+    $akun->save();
+    return redirect()->route('listcekout')->with('success', 'Pekerjaan telah dimulai');
+  }
+
+  public function listJoki()
+  {
+    $order = Order::with(['transaksi','user','produk', 'detailJoki'])
+          ->whereHas('produk', function($query) {
+              $query->where('kategori', 'joki');
+          })
+          ->orderBy('created_at', 'asc')
+          ->get();
+
+    return view('seller.listJoki', compact('order'));
+  }
+
+  public function mulaipengerjaan($id)
+  {
+    $joki = Detail_joki::findOrFail($id);
+
+    $joki->status_pekerjaan = 'proses';
+    $joki->save();
+    return redirect()->route('listJoki')->with('success', 'Pekerjaan telah dimulai');
+  }
+
+  public function selesaiPengerjaan($id)
+  {
+    $joki = Detail_joki::findOrFail($id);
+    $joki->status_pekerjaan = 'selesai';
+    $joki->save();
+    return redirect()->route('listJoki')->with('success', 'Pekerjaan telah dimulai');
+  }
 }
