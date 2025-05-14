@@ -14,7 +14,8 @@ class PembeliController extends Controller
 {
     public function lihatProduk()
     {
-        $produk = Produk::all();
+        // $produk = Produk::all();
+        $produk = Produk::where('status', 'tersedia')->get();
         return view('costumer.dashboard', compact('produk'));
     }
 
