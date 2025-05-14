@@ -6,6 +6,7 @@ use App\Models\Detail_joki;
 use App\Models\Order;
 use App\Models\Produk;
 use App\Models\Transaksi;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,15 +72,43 @@ class PembeliController extends Controller
 
         return redirect()->route('lihatStatus', $produk->id)->with('success', 'Checkout berhasil! Silakan tunggu proses admin.');
     }
-
+    
     public function lihatStatus()
     {
 
         $order = Order::where('user_id', Auth::id())
-        ->with('transaksi', 'produk')
+        ->with('transaksi', 'produk', 'detailJoki')
         ->get();
         // dd($order);
 
         return view('costumer.statusPembelian', compact('order'));
     }
+
+    public function buatWishlist($id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        $wishlist = Wishlist::where('user_id', Auth::id())
+            ->where('produk_id', $id)
+            ->first();
+        
+        if ($wishlist) {
+            return redirect()->back()->with('error', 'Produk sudah ada di wishlist');
+       }
+       Wishlist::create([
+            'user_id' => Auth::id(),
+            'produk_id' => $id,
+        ]);
+        return redirect()->route('lihatwishlist')->with('success', 'Produk berhasil ditambahkan ke wishlist');
+   }
+   
+   public function lihatWishlist()
+   {
+        $wishlist = Wishlist::where('user_id', Auth::user()->id)
+            ->with('produk')
+            ->get();
+            
+        return view('costumer.wishlist', compact('wishlist'));
+   }
+        
 }
