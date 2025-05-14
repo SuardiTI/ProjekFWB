@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,8 +12,18 @@ class AdminController extends Controller
 {
      public function lihatProduk()
      {
-          $produk = Produk::with('user')->get();
+          // $produk = Produk::with('user')->get();
+          $produk = Produk::where('status', 'tersedia')->get();
           return view('admin.lihat_produk', compact('produk'));
+     }
+
+     public function lihatProdukTerjual()
+     {
+       $produkTerjual = Produk::where('status', 'terjual')
+         ->orderBy('updated_at', 'desc')
+         ->get();
+         
+       return view('admin.produkTerjual', compact('produkTerjual'));
      }
 
      public function hapus(Request $request)
@@ -36,7 +47,11 @@ class AdminController extends Controller
 
      public function lihatProdukPerseller($id)
      {
-          $prdk = Produk::with('user')->where('user_id',$id)->get();
+          $prdk = Produk::with('user')
+               ->where('user_id',$id)
+               ->where('status', 'tersedia')
+               ->get();
+          // $produk = Produk::where('status', 'tersedia')->get();
           return view('admin.lihatProdukSeller', compact('prdk'));
      }
 
@@ -54,5 +69,28 @@ class AdminController extends Controller
           return redirect()->route('lihatPembeli')->with('success', 'Akun berhasil dihapus');
      }
 
+     public function verfikasi()
+     {
+          $order = Order::with(['transaksi','user','produk'])
+          ->orderBy('created_at', 'asc')
+          ->get();
+
+          return view('admin.verifikasiPembayaran', compact('order'));
+     }
+
+     public function terimaPembayaran($id)
+     {
+          $order = Order::findOrFail($id);
+          $order->konfirmasi_admin = 'diterima';
+          $order->save();
+          return redirect()->route('verifikasiPembayaran')->with('success', 'Pembayaran berhasil diterima');
+     }
+     public function tolakPembayaran($id)
+     {
+          $order = Order::findOrFail($id);
+          $order->konfirmasi_admin = 'ditolak';
+          $order->save();
+          return redirect()->route('verifikasiPembayaran')->with('success', 'Pembayaran ditolak');
+     }
 
 }
