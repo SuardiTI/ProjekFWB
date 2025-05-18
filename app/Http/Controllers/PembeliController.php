@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Detail_joki;
 use App\Models\Order;
 use App\Models\Produk;
+use App\Models\Review;
 use App\Models\Transaksi;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -35,19 +36,26 @@ class PembeliController extends Controller
             'tanggal_pembayaran' => 'required|date',
             'bukti_pembayaran' => 'nullable|image|max:2048',
         ]);
-        // Ambil data produk
+      
         $produk = Produk::findOrFail($request->produk_id);
 
-        // Simpan ke tabel orders
+        if ($produk->kategori == 'joki') {
+            $request->validate([
+                'username_game' => 'required|string|max:255',
+                'password_game' => 'required|string|max:255',
+                'instruksi' => 'nullable|string|max:500',
+            ]);
+        }
+
         $order = Order::create([
             'user_id' => Auth::id(),
             'produk_id' => $produk->id,
             'kontak_pembeli' => $request->kontak_pembeli,
             'total_harga' => $produk->harga,
-            // status & lainnya otomatis default
+           
         ]);
 
-        // bukti pembayaran 
+        
         $buktiPath = null;
         if ($request->hasFile('bukti_pembayaran')) {
             $buktiPath = $request->file('bukti_pembayaran')->store('bukti', 'public');
@@ -60,7 +68,7 @@ class PembeliController extends Controller
             'jumlah_dibayar' => $request->jumlah_dibayar,
             'tanggal_pembayaran' => now(),
             'bukti_pembayaran' => $buktiPath,
-            // status & distribusi pakai default
+            
         ]);
         if($produk->kategori == 'joki'){
             Detail_joki::create([
@@ -71,18 +79,35 @@ class PembeliController extends Controller
             ]);
         }
 
-        return redirect()->route('lihatStatus', $produk->id)->with('success', 'Checkout berhasil! Silakan tunggu proses admin.');
+     
+        $produk->status = 'terjual';
+        $produk->save();
+
+        return redirect()->route('dashboardCustomer')->with('success', 'Checkout berhasil! Silakan tunggu proses admin.');
     }
-    
+
     public function lihatStatus()
     {
-
-        $order = Order::where('user_id', Auth::id())
-        ->with('transaksi', 'produk', 'detailJoki')
+    $order = Order::where('user_id', Auth::id())
+        ->whereHas('produk', function ($query) {
+            $query->where('kategori', 'akun'); // Filter berdasarkan kategori di tabel produk
+        })
+        ->with('transaksi', 'produk') 
         ->get();
-        // dd($order);
 
-        return view('costumer.statusPembelian', compact('order'));
+    return view('costumer.statusPembelian', compact('order'));
+    }
+
+    public function statusJoki()
+    {
+    $order = Order::where('user_id', Auth::id())
+        ->whereHas('produk', function ($query) {
+            $query->where('kategori', 'joki'); // Filter berdasarkan kategori di tabel produk
+        })
+        ->with('transaksi', 'produk')
+        ->get();
+
+    return view('costumer.statusJoki', compact('order'));
     }
 
     public function buatWishlist($id)
@@ -111,5 +136,16 @@ class PembeliController extends Controller
             
         return view('costumer.wishlist', compact('wishlist'));
    }
-        
+
+    public function selesaikanTransaksi($id)
+    {
+    $order = Order::where('id', $id)
+         ->where('user_id', Auth::id())
+         ->firstOrFail();
+
+    $order->konfirmasi_customer = 'sudah';
+    $order->save();
+
+    return redirect()->route('lihatStatus')->with('success', 'Transaksi berhasil diselesaikan');
+   }
 }
