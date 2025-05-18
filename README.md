@@ -315,44 +315,6 @@
       </tr>
     </tbody>
   </table><br>
-
-   <li>reviews</li>
-  <table>
-    <thead>
-      <tr>
-        <th>Nama field</th>
-        <th>Tipe data</th>
-        <th>keterangan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>id</td>
-        <td>bigint unsigned</td>
-        <td>Primary Key</td>
-      </tr>
-      <tr>
-        <td>user_id</td>
-        <td>bigint unsigned</td>
-        <td>Foreign Key ke tabel users</td>
-      </tr>
-      <tr>
-        <td>produk_id</td>
-        <td>bigint unsigned</td>
-        <td>Foreign Key ke tabel produk</td>
-      </tr>
-      <tr>
-        <td>rating</td>
-        <td>decimal</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>ulasan</td>
-        <td>text</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
 </ol><br><br>
 
 <h2 align="center">JENIS RELASI DAN TABEL YANG BERELASI</h2>
@@ -402,12 +364,12 @@
             <tr>
                 <td>created_at</td>
                 <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
+                <td>Waktu pembuatan</td>
             </tr>
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
@@ -464,7 +426,7 @@
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
@@ -526,12 +488,12 @@
              <tr>
                 <td>created_at</td>
                 <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
+                <td>Waktu pembuatan</td>
             </tr>
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
@@ -593,12 +555,12 @@
              <tr>
                 <td>created_at</td>
                 <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
+                <td>Waktu pembuatan</td>
             </tr>
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
@@ -645,63 +607,16 @@
              <tr>
                 <td>created_at</td>
                 <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
+                <td>Waktu pembuatan</td>
             </tr>
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
-    <li>reviews</li>
-    <table>
-        <thead>
-            <tr>
-                <th>Nama field</th>
-                <th>Tipe data</th>
-                <th>Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>id</td>
-                <td>bigint unsigned</td>
-                <td>Primary Key</td>
-            </tr>
-            <tr>
-                <td>user_id</td>
-                <td>bigint unsigned</td>
-                <td>Foreign Key ke tabel users (Reviewer)</td>
-            </tr>
-            <tr>
-                <td>produk_id</td>
-                <td>bigint unsigned</td>
-                <td>Foreign Key ke tabel produks</td>
-            </tr>
-            <tr>
-                <td>rating</td>
-                <td>decimal(2, 1)</td>
-                <td>Rating produk (skala 0.0 - 9.9)</td>
-            </tr>
-            <tr>
-                <td>ulasan</td>
-                <td>text</td>
-                <td>Isi ulasan/komentar produk</td>
-            </tr>
-             <tr>
-                <td>created_at</td>
-                <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
-            </tr>
-             <tr>
-                <td>updated_at</td>
-                <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
-            </tr>
-        </tbody>
-    </table><br>
-     <li>user_transaksis</li>
+    <li>wishlists</li>
     <table>
         <thead>
             <tr>
@@ -722,31 +637,34 @@
                 <td>Foreign Key ke tabel users</td>
             </tr>
             <tr>
-                <td>transaksi_id</td>
+                <td>produk_id</td>
                 <td>bigint unsigned</td>
-                <td>Foreign Key ke tabel transaksis</td>
+                <td>Foreign Key ke tabel produks</td>
             </tr>
              <tr>
                 <td>created_at</td>
                 <td>timestamp</td>
-                <td>Waktu pembuatan record</td>
+                <td>Waktu pembuatan</td>
             </tr>
              <tr>
                 <td>updated_at</td>
                 <td>timestamp</td>
-                <td>Waktu terakhir diupdate record</td>
+                <td>Waktu terakhir diupdate</td>
             </tr>
         </tbody>
     </table><br>
 </ol>
 
 <h2 align="center">TABEL YANG BERELASI</h2>
-<li>User one to many Produk</li>
-<li>User one to many Order</li>
-<li>User one to many Review</li>
-<li>User many to many Transaksi (via pivot user_transaksis)</li>
-<li>Produk one to many Order</li>
-<li>Produk one to many Review</li>
-<li>Order one to one Transaksi</li>
-<li>Order one to one Detail Joki</li>
-<li>Transaksi many to many User (via pivot user_transaksis)</li>
+<ul>
+  <li>User one to many Produk</li>
+  <li>User one to many Order</li>
+  <li>User many to many Produk (via pivot orders)</li>
+  <li>User many to many Produk (via pivot wishlists)</li>
+  <li>Produk one to many Order</li>
+  <li>Produk one to many Wishlist</li>
+  <li>Order one to one Transaksi</li>
+  <li>Order one to one Detail Joki</li>
+</ul>
+
+
