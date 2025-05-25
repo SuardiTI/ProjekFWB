@@ -5,25 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Detail_joki;
 use App\Models\Order;
 use App\Models\Produk;
-use App\Models\Produk_gambar;
-// use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PenjualController extends Controller
 {
-  // public function lihat()
-  // {
-  //   $produk = Produk::with('user')->where('user_id', Auth::user()->id)->get();
-  //   return view('seller.lihatProduk', compact('produk'));
-  // }
   public function lihat()
   {
     $produk = Produk::where('status', 'tersedia')
       ->where('user_id', Auth::user()->id)
       ->orderBy('updated_at', 'desc')
       ->get();
-    return view('seller.lihatProduk', compact('produk'));
+    return view('seller.lihatProduk', compact('produk')); 
   }
 
   public function lihatProdukTerjual()
@@ -43,7 +38,6 @@ class PenjualController extends Controller
   public function tambah(Request $request)
   {
       // dd($request);
-
       $request->validate([
         'kategori' => 'required|string',
         'nama_game' => 'required|string|max:255',
@@ -51,6 +45,9 @@ class PenjualController extends Controller
         'harga' => 'required|numeric|min:0',
         'path_gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20048',
     ]);
+
+    DB::beginTransaction();
+    try{
       $data = new Produk();
       $data->user_id = Auth::user()->id;
       $data->kategori = $request->kategori;
@@ -64,7 +61,16 @@ class PenjualController extends Controller
           $data->path_gambar = $request->file('path_gambar')->store('gambar_game', 'public');
       }
       $data->save();
+      DB::commit();
       return redirect()->route('lihat')->with('success', 'Produk berhasil ditambahkan');
+    }catch(\Exception $e){
+      DB::rollBack();
+
+      if (isset($data->path_gambar) && Storage::disk('public')->exists($data->path_gambar)) {
+        Storage::disk('public')->delete($data->path_gambar);
+      }
+      return redirect()->route('lihat')->with('error', 'Gagal menambahkan produk: ' . $e->getMessage());
+    } 
   }
 
   public function edit(Request $request)
@@ -78,19 +84,29 @@ class PenjualController extends Controller
           'harga' => 'required|numeric|min:0',
           'path_gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20048',
         ]);
-        
-        $edit->kategori = $request->kategori;
-        $edit->nama_game = $request->nama_game;
-        $edit->path_gambar = $request->path_gambar;
-        $edit->deskripsi = $request->deskripsi;
-        $edit->harga = $request->harga;
-        $edit->status = $request->status;
 
-        if ($request->hasFile('path_gambar')) {
-            $edit->path_gambar = $request->file('path_gambar')->store('gambar_game', 'public');
+        DB::beginTransaction();
+        try{
+            $edit->kategori = $request->kategori;
+            $edit->nama_game = $request->nama_game;
+            $edit->path_gambar = $request->path_gambar;
+            $edit->deskripsi = $request->deskripsi;
+            $edit->harga = $request->harga;
+            $edit->status = $request->status;
+
+            if ($request->hasFile('path_gambar')) {
+                $edit->path_gambar = $request->file('path_gambar')->store('gambar_game', 'public');
+            }
+            $edit->save();
+            DB::commit();
+            return redirect()->route('lihat')->with('success', 'Produk berhasil diubah');
+        }catch(\Exception $e){
+          DB::rollBack();
+          if (isset($edit->path_gambar) && $request->hasFile('path_gambar') && Storage::disk('public')->exists($edit->path_gambar)) {
+            Storage::disk('public')->delete($edit->path_gambar);
+          }
+          return redirect()->route('lihat')->with('error', 'Gagal mengubah produk: ' . $e->getMessage());
         }
-        $edit->save();
-        return redirect()->route('lihat')->with('success', 'Produk berhasil diubah');
       }
       return view('seller.editProduk', compact('edit'));
   }
@@ -98,9 +114,25 @@ class PenjualController extends Controller
   public function hapus(Request $request)
   {
     // dd($request->id);
-    $produk = Produk::findOrFail($request->id);
-    $produk->delete();
-    return redirect()->route('lihat')->with('success', 'Produk berhasil Dihapus');
+    DB::beginTransaction();
+    try{
+      $produk = Produk::findOrFail($request->id);
+
+      if ($produk->path_gambar) {
+        $urlGambar = $produk->path_gambar;
+        if (Storage::disk('public')->exists($urlGambar)) {
+            Storage::disk('public')->delete($urlGambar);
+        }
+      }
+      $produk->delete();
+      DB::commit();
+      return redirect()->route('lihat')->with('success', 'Produk berhasil Dihapus');
+
+    }catch(\Exception $e){
+      DB::rollBack();
+      return redirect()->route('lihat')->with('error', 'Produk gagal dihapus' . $e->getMessage());
+    }
+   
   }
 
   public function listCekout()

@@ -8,8 +8,10 @@ use App\Models\Produk;
 use App\Models\Review;
 use App\Models\Transaksi;
 use App\Models\Wishlist;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PembeliController extends Controller
 {
@@ -37,60 +39,70 @@ class PembeliController extends Controller
             'bukti_pembayaran' => 'nullable|image|max:2048',
         ]);
       
-        $produk = Produk::findOrFail($request->produk_id);
 
-        if ($produk->kategori == 'joki') {
-            $request->validate([
-                'username_game' => 'required|string|max:255',
-                'password_game' => 'required|string|max:255',
-                'instruksi' => 'nullable|string|max:500',
+        DB::beginTransaction();
+        try{
+            $produk = Produk::findOrFail($request->produk_id);
+
+            if ($produk->kategori == 'joki') {
+                $request->validate([
+                    'username_game' => 'required|string|max:255',
+                    'password_game' => 'required|string|max:255',
+                    'instruksi' => 'nullable|string|max:500',
+                ]);
+            }
+
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'produk_id' => $produk->id,
+                'kontak_pembeli' => $request->kontak_pembeli,
+                'total_harga' => $produk->harga,
             ]);
-        }
-
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'produk_id' => $produk->id,
-            'kontak_pembeli' => $request->kontak_pembeli,
-            'total_harga' => $produk->harga,
-           
-        ]);
-
         
-        $buktiPath = null;
-        if ($request->hasFile('bukti_pembayaran')) {
-            $buktiPath = $request->file('bukti_pembayaran')->store('bukti', 'public');
-        }
+            $buktiPath = null;
+            if ($request->hasFile('bukti_pembayaran')) {
+                $buktiPath = $request->file('bukti_pembayaran')->store('bukti', 'public');
+            }
 
-        
-        Transaksi::create([
-            'order_id' => $order->id,
-            'metode_pembayaran' => $request->metode_pembayaran,
-            'jumlah_dibayar' => $request->jumlah_dibayar,
-            'tanggal_pembayaran' => now(),
-            'bukti_pembayaran' => $buktiPath,
-            
-        ]);
-        if($produk->kategori == 'joki'){
-            Detail_joki::create([
+            Transaksi::create([
                 'order_id' => $order->id,
-                'username_game' => $request->username_game,
-                'password_game' => $request->password_game,
-                'instruksi' => $request->instruksi,
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'jumlah_dibayar' => $request->jumlah_dibayar,
+                'tanggal_pembayaran' => now(),
+                'bukti_pembayaran' => $buktiPath,
+
             ]);
+            if($produk->kategori == 'joki'){
+                Detail_joki::create([
+                    'order_id' => $order->id,
+                    'username_game' => $request->username_game,
+                    'password_game' => $request->password_game,
+                    'instruksi' => $request->instruksi,
+                ]);
+            }
+
+            $produk->status = 'terjual';
+            $produk->save();
+
+            DB::commit();
+
+            return redirect()->route('dashboardCustomer')->with('success', 'Checkout berhasil! Silakan tunggu proses admin.');
+        }catch (\Exception $e) {
+
+            DB::rollBack();
+
+            if (isset($buktiPath) && Storage::disk('public')->exists($buktiPath)) {
+                Storage::disk('public')->delete($buktiPath);
+            }
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat checkout: ' . $e->getMessage());
         }
-
-     
-        $produk->status = 'terjual';
-        $produk->save();
-
-        return redirect()->route('dashboardCustomer')->with('success', 'Checkout berhasil! Silakan tunggu proses admin.');
     }
 
     public function lihatStatus()
     {
     $order = Order::where('user_id', Auth::id())
         ->whereHas('produk', function ($query) {
-            $query->where('kategori', 'akun'); // Filter berdasarkan kategori di tabel produk
+            $query->where('kategori', 'akun'); 
         })
         ->with('transaksi', 'produk') 
         ->get();
@@ -102,7 +114,7 @@ class PembeliController extends Controller
     {
     $order = Order::where('user_id', Auth::id())
         ->whereHas('produk', function ($query) {
-            $query->where('kategori', 'joki'); // Filter berdasarkan kategori di tabel produk
+            $query->where('kategori', 'joki'); 
         })
         ->with('transaksi', 'produk')
         ->get();
@@ -112,7 +124,7 @@ class PembeliController extends Controller
 
     public function buatWishlist($id)
     {
-        $produk = Produk::findOrFail($id);
+        Produk::findOrFail($id);
 
         $wishlist = Wishlist::where('user_id', Auth::id())
             ->where('produk_id', $id)
