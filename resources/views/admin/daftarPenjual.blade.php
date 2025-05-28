@@ -25,21 +25,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{-- Check if the collection is empty --}}
+            
                   @if ($pengguna->isEmpty())
                       <tr>
                           <td colspan="5" class="text-center">Tidak ada data penjual.</td>
                       </tr>
                   @else
-                      {{-- Loop through the $pembeli variable --}}
+
                       @foreach ($pengguna as $user)
                       <tr>
                         <td>
                           <div class="d-flex px-2 py-1">
                             <div>
-                              {{-- Assuming 'avatar' is a property or you have a default image --}}
-                              {{-- Replace with actual user avatar if available, otherwise use a placeholder --}}
-                              {{-- Using a generic icon or initial for now as avatar is not in schema --}}
+                             
                               <div class="avatar avatar-sm me-3 border-radius-lg bg-gradient-primary text-white d-flex align-items-center justify-content-center">
                                   {{ strtoupper(substr($user->name, 0, 1)) }}
                               </div>
@@ -55,7 +53,7 @@
                         </td>
                         <td>
                           {{-- Display Role --}}
-                          <p class="text-xs font-weight-bold mb-0">{{ $user->role }}</p>
+                          <p class="text-xs font-weight-bold mb-0">{{ ucfirst($user->role) }}</p>
                         </td>
                         {{-- Removed Status column --}}
                         {{-- <td class="align-middle text-center text-sm">
@@ -70,17 +68,20 @@
                           <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/Y') }}</span> {{-- Format date as needed, using Y for full year --}}
                         </td>
                         <td class="align-middle">
-                          {{-- Action Buttons/Links --}}
-                          <form action="" method="GET" class="d-inline">
-                            @csrf
-                          <a href="/lihatprodukperseller/{{ $user->id }}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Lihat Produk">
-                            Lihat Produk
-                          </a>
-                          {{-- Delete Button (using a form for proper DELETE request) --}}
-                          <a type="button" href="/adminhapusseller/{{ $user->id }}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Lihat Produk">
-                            Hapus Akun
-                          </a>
-                        </td>
+                          <div class="d-flex gap-2">
+                              <!-- Tombol Lihat Produk -->
+                              <a href="/lihatprodukperseller/{{ $user->id }}" class="btn btn-primary btn-sm" data-toggle="tooltip" data-original-title="Lihat Produk">
+                                  Lihat Produk
+                              </a>
+                              <!-- Tombol Hapus Akun -->
+                              <form action="{{ route('hapusAkunSeller',$user->id) }}" method="POST" class="d-inline">
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-original-title="Hapus Akun" onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
+                                      Hapus Akun
+                                  </button>
+                              </form>
+                          </div>
+                      </td>
                       </tr>
                       @endforeach
                   @endif

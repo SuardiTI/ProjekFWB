@@ -45,8 +45,8 @@
                               </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-                              {{-- Email is now in its own column --}}
+                              <h6 class="mb-0 text-sm">{{ ucfirst($user->name) }}</h6>
+                              
                             </div>
                           </div>
                         </td>
@@ -55,7 +55,7 @@
                         </td>
                         <td>
                           {{-- Display Role --}}
-                          <p class="text-xs font-weight-bold mb-0">{{ $user->role }}</p>
+                          <p class="text-xs font-weight-bold mb-0">{{ ucfirst($user->role) }}</p>
                         </td>
                         {{-- Removed Status column --}}
                         {{-- <td class="align-middle text-center text-sm">
@@ -70,11 +70,14 @@
                           <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/Y') }}</span> {{-- Format date as needed, using Y for full year --}}
                         </td>
                         <td class="align-middle">
-                          {{-- Delete Button (using a form for proper DELETE request) --}}
-                          <a type="button" href="/adminhapuscustomer/{{ $user->id }}" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Lihat Produk">
-                            Hapus Akun
-                          </a>
-                        </td>
+                          <div class="d-flex gap-2">
+                              <!-- Tombol Hapus Akun -->
+                              <form action="{{ route('hapusAkunPembeli', $user->id) }}" method="POST" class="d-inline">
+                                  @csrf
+                                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus Akun</button>
+                              </form>
+                          </div>
+                      </td>
                       </tr>
                       @endforeach
                   @endif

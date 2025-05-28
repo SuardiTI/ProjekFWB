@@ -11,7 +11,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active bg-gradient-dark text-white" href="/dashboard">
-            <i class="material-symbols-roun ed opacity-5">dashboard</i>
+            <i class="material-symbols-roun ed opacity-5">{{ ucfirst(Auth::user()->role) }}</i>
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
@@ -24,26 +24,32 @@
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihatPenjual') }}">
-          <i class="material-symbols-rounded opacity-5">receipt_long</i>
+          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
           <span class="nav-link-text ms-1">Seller</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihatPembeli') }}">
-          <i class="material-symbols-rounded opacity-5">receipt_long</i>
+          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
           <span class="nav-link-text ms-1">Costumer</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark" href="#">
-          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+        <a class="nav-link text-dark" href="{{ route('verifikasiPembayaran') }}"> 
+          <i class="material-symbols-rounded opacity-5">receipt_long</i>
           <span class="nav-link-text ms-1">Verifikasi Pembayaran</span>
         </a>
       </li>
-          
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('adminlihatProdukTerjual') }}">
+          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <span class="nav-link-text ms-1">Produk Terjual</span>
+        </a>
+      </li>
         @endif
 
         @if (Auth::user()->role === 'penjual')
+        <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihat') }}">
           <i class="material-symbols-rounded opacity-5">table_view</i>
           <span class="nav-link-text ms-1">Lihat Produk</span>
@@ -56,14 +62,26 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark" href="#">
+        <a class="nav-link text-dark" href="{{ route('listcekout') }}">
+          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+          <span class="nav-link-text ms-1">List Cekout</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('listJoki') }}">
           <i class="material-symbols-rounded opacity-5">view_in_ar</i>
           <span class="nav-link-text ms-1">List Joki</span>
         </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('lihatProdukTerjual') }}">
+          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <span class="nav-link-text ms-1">Produk Terjual</span>
+        </a>
+      </li>
         @endif
-        <li class="nav-item">
-         
-        <li class="nav-item">
+
+        {{-- <li class="nav-item">
           <a class="nav-link text-dark" href="../pages/virtual-reality.html">
             <i class="material-symbols-rounded opacity-5">view_in_ar</i>
             <span class="nav-link-text ms-1">Virtual Reality</span>
@@ -89,7 +107,7 @@
             <i class="material-symbols-rounded opacity-5">person</i>
             <span class="nav-link-text ms-1">Profile</span>
           </a>
-        </li>
+        </li> --}}
         <style>
             .btn-logout {
                 background: none; /* Hilangkan background */
@@ -123,10 +141,10 @@
         </li> --}}
       </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
       <div class="mx-3">
         <a class="btn btn-outline-dark mt-4 w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree" type="button">Documentation</a>
         <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
       </div>
-    </div>
+    </div> --}}
   </aside>

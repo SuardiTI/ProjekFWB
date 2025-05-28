@@ -11,11 +11,11 @@
           <img src="{{ asset('appland')}}/assets/img/hero-img.png" class="img-fluid animated" alt="">
         </div>
         <div class="col-lg-6  d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-in">
-          <h2>App landing page template</h2>
-          <p>We are team of talented designers making websites with Bootstrap</p>
+          <h2>Welcome to AkunMarket</h2>
+          <h4>Temukan Akun Game dan Jasa Joki Berpengalaman Disini</h4>
           <div class="d-flex mt-4 justify-content-center justify-content-md-start">
-            <a href="#" class="download-btn"><i class="bi bi-google-play"></i> <span>Google Play</span></a>
-            <a href="#" class="download-btn"><i class="bi bi-apple"></i> <span>App Store</span></a>
+            {{-- <a href="#" class="download-btn"><i class="bi bi-google-play"></i> <span>Google Play</span></a>
+            <a href="#" class="download-btn"><i class="bi bi-apple"></i> <span>App Store</span></a> --}}
           </div>
         </div>
       </div>

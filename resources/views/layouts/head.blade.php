@@ -18,5 +18,18 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material') }}/assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
   
+    <style>
+      .img-card-16x9-wrapper {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.img-card-16x9 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+    </style>
   </head>
   

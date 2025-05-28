@@ -47,7 +47,7 @@
                           </div>
                         </td>
                         <td>
-                            <p class="text-xs text-secondary mb-0">{{ $orderan->produk->nama_game }}</p>
+                            <p class="text-xs font-weight-bold text-secondary mb-0">{{ $orderan->produk->nama_game }}</p>
                         </td>
                         <td>
                           <p class="text-xs font-weight-bold mb-0">{{ ucfirst($orderan->produk->kategori) }}</p>
@@ -61,33 +61,61 @@
                         <td>
                             <p class="text-xs font-weight-bold mb-0">{{ ucfirst($orderan->konfirmasi_admin) }}</p>
                         </td>
+                        <!-- Kolom Aksi -->
+                        @if ($orderan->konfirmasi_admin === 'diterima')
                         <td>
-                          <!-- Kolom Aksi -->
                           <div class="d-flex gap-2">
-                              @if ($orderan->detailJoki && $orderan->detailJoki->status_pekerjaan === 'belum_mulai')
-                                  <!-- Tombol Mulai Pengerjaan -->
-                                  <form action="{{ route('mulaipengerjaan', $orderan->detailJoki->id) }}" method="POST" class="d-inline">
-                                      @csrf
-                                      <button type="submit" class="btn btn-success btn-sm">Mulai</button>
-                                  </form>
-                              @elseif ($orderan->detailJoki && $orderan->detailJoki->status_pekerjaan === 'proses')
-                                  <!-- Tombol Selesaikan Pengerjaan -->
-                                  <form action="{{ route('selesaiPengerjaan', $orderan->detailJoki->id) }}" method="POST" class="d-inline">
-                                      @csrf
-                                      <button type="submit" class="btn btn-primary btn-sm">Selesai</button>
-                                  </form>
-                              @elseif ($orderan->detailJoki && $orderan->detailJoki->status_pekerjaan === 'selesai')
-                                  <p class="text-xs text-muted mb-0">-</p>
-                              @endif
-                          </div>
+                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal{{ $orderan->id }}">
+                              Lihat Detail
+                                </button>
+                            @if ($orderan->detailJoki && $orderan->detailJoki->status_pekerjaan === 'belum_mulai')
+                              
+                                <!-- Tombol Mulai Pengerjaan -->
+                                <form action="{{ route('mulaipengerjaan', $orderan->detailJoki->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Mulai</button>
+                                </form>
+                            @elseif ($orderan->detailJoki && $orderan->detailJoki->status_pekerjaan === 'proses')
+                            <!-- Tombol Selesaikan Pengerjaan -->
+                                <form action="{{ route('selesaiPengerjaan', $orderan->detailJoki->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary btn-sm">Selesai</button>
+                                </form>
+                           
+                            @endif
+                        </div>
+                          @else
+                              -
+                          @endif
                         </td>
                         <td>
                           <!-- Kolom Status Pengerjaan -->
                           <p class="text-xs font-weight-bold {{ $orderan->detailJoki->status_pekerjaan === 'selesai' ? 'text-success' : ($orderan->detailJoki->status_pekerjaan === 'proses' ? 'text-primary' : 'text-muted') }} mb-0">
-                              {{ ucfirst($orderan->detailJoki->status_pekerjaan) }}
+                            {{ Str::title(str_replace('_', ' ', $orderan->detailJoki->status_pekerjaan)) }}
                           </p>
                         </td>
                       </tr>
+                      <!-- Modal Detail Joki -->
+                      <div class="modal fade" id="detailModal{{ $orderan->id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $orderan->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="detailModalLabel{{ $orderan->id }}">Detail Akun Game</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                              <ul class="list-group">
+                                <li class="list-group-item"><strong>Username:</strong> {{ $orderan->detailJoki->username_game }}</li>
+                                <li class="list-group-item"><strong>Password:</strong> {{ Crypt::decrypt($orderan->detailJoki->password_game) }}</li>
+                                <li class="list-group-item"><strong>Instruksi:</strong> {{ $orderan->detailJoki->instruksi }}</li>
+                              </ul>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       @endforeach
                   @endif
                 </tbody>

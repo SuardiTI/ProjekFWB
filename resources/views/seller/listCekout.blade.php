@@ -25,6 +25,7 @@
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Konfirmasi Admin</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengiriman</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Konfirmasi Costumer</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,10 +49,10 @@
                           </div>
                         </td>
                         <td>
-                          <p class="text-xs text-secondary mb-0">{{ $orderan->kontak_pembeli }}</p>
+                          <p class="text-xs font-weight-bold text-secondary mb-0">{{ $orderan->kontak_pembeli }}</p>
                         </td>
                         <td>
-                            <p class="text-xs text-secondary mb-0">{{ $orderan->produk->nama_game }}</p>
+                            <p class="text-xs font-weight-bold text-secondary mb-0">{{ $orderan->produk->nama_game }}</p>
                         </td>
                         <td>
                           <p class="text-xs font-weight-bold mb-0">{{ ucfirst($orderan->produk->kategori) }}</p>
@@ -75,13 +76,13 @@
                                       <button type="submit" class="btn btn-success btn-sm">Kirim</button>
                                   </form>
                               @elseif ($orderan->status_pengiriman === 'proses')
-                                  <!-- Tampilkan "-" jika pengiriman sedang diproses -->
+                                  
                                   <p class="text-xs text-muted mb-0">-</p>
                               @elseif ($orderan->status_pengiriman === 'selesai')
-                                  <!-- Tampilkan "-" jika pengiriman selesai -->
+                                  
                                   <p class="text-xs text-muted mb-0">-</p>
                               @else
-                                  <!-- Jika tidak memenuhi kondisi -->
+                                  
                                   <p class="text-xs text-muted mb-0">-</p>
                               @endif
                           </div>
@@ -89,9 +90,10 @@
                         <td>
                           <!-- Kolom Status Pengiriman -->
                           <p class="text-xs font-weight-bold {{ $orderan->status_pengiriman === 'selesai' ? 'text-success' : ($orderan->status_pengiriman === 'proses' ? 'text-primary' : 'text-muted') }} mb-0">
-                              {{ ucfirst($orderan->status_pengiriman) }}
+                            {{ Str::title(str_replace('_', ' ', $orderan->status_pengiriman)) }}
                           </p>
                         </td>
+                        <td><p class="text-xs text-secondary mb-0 font-weight-bold">{{ ucfirst($orderan->konfirmasi_customer) }}</p></td>
                       </tr>
                       @endforeach
                   @endif

@@ -7,8 +7,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="{{ asset('Appland') }}/assets/img/favicon.png" rel="icon">
-  <link href="{{ asset('Appland') }}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  {{-- <link href="{{ asset('Appland') }}/assets/img/favicon.png" rel="icon"> --}}
+  {{-- <link href="{{ asset('Appland') }}/assets/img/apple-touch-icon.png" rel="apple-touch-icon"> --}}
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -24,6 +24,11 @@
 
   <!-- Main CSS File -->
   <link href="{{ asset('appland') }}/assets/css/main.css" rel="stylesheet">
+
+
+  {{-- logo --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
   <!-- =======================================================
   * Template Name: Appland
@@ -45,5 +50,15 @@
   text-decoration: none;
 }
 
+.img-card-16x9-wrapper {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.img-card-16x9 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
   </style>
 </head>

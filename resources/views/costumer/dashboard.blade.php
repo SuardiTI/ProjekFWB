@@ -2,7 +2,25 @@
 
 {{-- @extends('master.navbar') --}}
 @section('content')
+{{-- <section id="hero" class="hero section">
 
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-6 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
+          <img src="{{ asset('appland')}}/assets/img/hero-img.png" class="img-fluid animated" alt="">
+        </div>
+        <div class="col-lg-6  d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-in">
+          <h2>App landing page template</h2>
+          <p>We are team of talented designers making websites with Bootstrap</p>
+          <div class="d-flex mt-4 justify-content-center justify-content-md-start">
+            <a href="#" class="download-btn"><i class="bi bi-google-play"></i> <span>Google Play</span></a>
+            <a href="#" class="download-btn"><i class="bi bi-apple"></i> <span>App Store</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</section> --}}
 <div class="container section-title" data-aos="fade-up">
     <h2>TELUSURI PRODUK</h2>
     <p>Temukan Skin Game Impian Dan Boost Akunmu Ke Level Tertinggi Dengan Jasa Kami</p>
@@ -13,10 +31,14 @@
         @foreach ($produk as $produk)
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="{{ asset(Storage::url($produk->path_gambar) ?? 'default.jpg') }}" class="card-img-top" alt="{{ $produk->nama_game }}">
+                    <div class="img-card-16x9-wrapper">
+                        <img src="{{ asset(Storage::url($produk->path_gambar) ?? 'default.jpg') }}"
+                             class="img-card-16x9"
+                             alt="{{ $produk->nama_game }}">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $produk->nama_game }}</h5>
-                        <p class="card-text">Kategori: {{ $produk->kategori }}</p>
+                        <p class="card-text">Kategori: {{ ucfirst($produk->kategori) }}</p>
                         <p class="card-text text-success">Rp {{ number_format($produk->harga, 0, ',', '.') }}</p>
                         <p class="card-text">
                             <span class="badge {{ $produk->status == 'tersedia' ? 'bg-success' : 'bg-secondary' }}">
@@ -31,9 +53,9 @@
                                 </button>
                             </div>
                             <div class="col-6 ps-1">
-                                <button type="button" class="btn btn-success w-100">
+                                <a href="{{ route('beliProduk',$produk->id) }}" class="btn btn-success w-100">
                                     Beli
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -59,10 +81,42 @@
                             </p>
                             <p><strong>Deskripsi:</strong></p>
                             <p>{{ $produk->deskripsi }}</p>
+
+                        {{-- <hr>
+                        <h4 align="center">Review untuk Penjual</h4>
+                        @if ($produk->reviews->isEmpty())
+                            <p class="text-muted">Belum ada review untuk produk ini.</p>
+                        @else
+                            <div class="row">
+                                @foreach ($produk->reviews as $review)
+                                    <div class="col-12 mb-3">
+                                        <div class="border p-3 rounded">
+                                            <div class="d-flex justify-content-between">
+                                                <p><strong>Nama:</strong> {{ ucfirst($review->user->name) }}</p>
+                                                <p><strong>Produk:</strong> {{ ucfirst($produk->nama_game) }}</p>
+                                                <p><strong>Kategori:</strong> {{ ucfirst($produk->kategori) }}</p>
+                                                <p><strong>Rating:</strong> {{ $review->rating }} / 5</p>
+                                            </div>
+                                            <div>
+                                                <p><strong>Ulasan:</strong></p>
+                                                <p>{{ $review->ulasan }}</p>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                @endforeach
+                            </div>
+                        @endif --}}
+                        
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <a href="/beliProduk/{{ $produk->id }}" class="btn btn-success">Beli</a>
+                            <form action="{{ route('buatWishlist', $produk->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                            </form>
+                            <a href="{{ route('beliProduk',$produk->id) }}" class="btn btn-success">Beli</a>
                         </div>
                     </div>
                 </div>

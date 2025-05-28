@@ -18,7 +18,11 @@
                             @foreach ($produkTerjual as $produk)
                                 <div class="col-md-4 mb-4">
                                     <div class="card h-100">
-                                        <img src="{{ asset(Storage::url($produk->path_gambar) ?? 'default.jpg') }}" class="card-img-top" alt="{{ $produk->nama_game }}">
+                                        <div class="img-card-16x9-wrapper">
+                                            <img src="{{ asset(Storage::url($produk->path_gambar) ?? 'default.jpg') }}"
+                                                 class="img-card-16x9"
+                                                 alt="{{ $produk->nama_game }}">
+                                        </div>
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $produk->nama_game }}</h5>
                                             <p class="card-text">Kategori: {{ $produk->kategori }}</p>
@@ -31,10 +35,6 @@
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal{{ $produk->id }}">
                                                 Lihat Detail
                                             </button>
-                                            <!-- Tombol Edit -->
-                                            <a type="button" href="/editproduk/{{ $produk->id }}" class="btn btn-success btn-sm">
-                                                Edit
-                                            </a>
                                             <!-- Tombol Hapus -->
                                             <a type="button" href="/sellerhapus/{{ $produk->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus produk ini?')">
                                                 Hapus

@@ -11,7 +11,11 @@
         @foreach ($wishlist as $wish)
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="{{ asset(Storage::url($wish->produk->path_gambar) ?? 'default.jpg') }}" class="card-img-top" alt="{{ $wish->nama_game }}">
+                    <div class="img-card-16x9-wrapper">
+                        <img src="{{ asset(Storage::url($produk->path_gambar) ?? 'default.jpg') }}"
+                             class="img-card-16x9"
+                             alt="{{ $produk->nama_game }}">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ ucfirst($wish->produk->nama_game) }}</h5>
                         <p class="card-text">Kategori: {{ ucfirst($wish->produk->kategori) }}</p>
@@ -24,12 +28,12 @@
                         <!-- Tombol Aksi -->
                         <div class="row">
                             <div class="col-6 pe-1">
-                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#detailModal{{ $wish->id }}">
+                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#detailModal{{ $wish->produk->id }}">
                                     Lihat Detail
                                 </button>
                             </div>
                             <div class="col-6 ps-1">
-                                <a href="/beliProduk/{{ $wish->id }}" class="btn btn-success w-100">
+                                <a href="/beliProduk/{{ $wish->produk->id }}" class="btn btn-success w-100">
                                     Beli
                                 </a>
                             </div>
@@ -66,7 +70,7 @@
                                 <i class="fa fa-heart"></i>
                             </button>
                             </form>
-                            <a href="/beliProduk/{{ $wish->id }}" class="btn btn-success">Beli</a>
+                            <a href="/beliProduk/{{ $wish->produk->id }}" class="btn btn-success">Beli</a>
                         </div>
                     </div>
                 </div>

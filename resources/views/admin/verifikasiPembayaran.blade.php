@@ -82,12 +82,12 @@
                               <!-- Tombol Terima -->
                               <form action="{{ route('terimaPembayaran', $order->id) }}" method="POST" class="d-inline">
                                   @csrf
-                                  <button type="submit" class="btn btn-success btn-sm">Terima</button>
+                                  <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Yakin ingin terima pembayaran ini?')">Terima</button>
                               </form>
                               <!-- Tombol Tolak -->
                               <form action="{{ route('tolakPembayaran', $order->id) }}" method="POST" class="d-inline">
                                   @csrf
-                                  <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
+                                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin tolak pembayaran ini?')">Tolak</button>
                               </form>
                           </div>
                       </td>
