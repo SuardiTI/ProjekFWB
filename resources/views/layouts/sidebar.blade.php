@@ -18,31 +18,31 @@
         {{-- ROLE ADMIN --}}
         @if (Auth::user()->role === 'admin')
         <a class="nav-link text-dark" href="{{ route('lihatProduk') }}">
-          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <i class="material-symbols-rounded opacity-5">view_list</i>
           <span class="nav-link-text ms-1">Cek Produk</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihatPenjual') }}">
-          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+          <i class="material-symbols-rounded opacity-5">manage_accounts</i>
           <span class="nav-link-text ms-1">Seller</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihatPembeli') }}">
-          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+          <i class="material-symbols-rounded opacity-5">manage_accounts</i>
           <span class="nav-link-text ms-1">Costumer</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('verifikasiPembayaran') }}"> 
-          <i class="material-symbols-rounded opacity-5">receipt_long</i>
+          <i class="material-symbols-rounded opacity-5">pending_actions</i>
           <span class="nav-link-text ms-1">Verifikasi Pembayaran</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('adminlihatProdukTerjual') }}">
-          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <i class="material-symbols-rounded opacity-5">inventory</i>
           <span class="nav-link-text ms-1">Produk Terjual</span>
         </a>
       </li>
@@ -51,63 +51,35 @@
         @if (Auth::user()->role === 'penjual')
         <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihat') }}">
-          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <i class="material-symbols-rounded opacity-5">view_list</i>
           <span class="nav-link-text ms-1">Lihat Produk</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihattmbh') }}">
-          <i class="material-symbols-rounded opacity-5">receipt_long</i>
+          <i class="material-symbols-rounded opacity-5">add_circle</i>
           <span class="nav-link-text ms-1">Upload Produk</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('listcekout') }}">
-          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+          <i class="material-symbols-rounded opacity-5">format_list_bulleted</i>
           <span class="nav-link-text ms-1">List Cekout</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('listJoki') }}">
-          <i class="material-symbols-rounded opacity-5">view_in_ar</i>
+          <i class="material-symbols-rounded opacity-5">format_list_bulleted</i>
           <span class="nav-link-text ms-1">List Joki</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark" href="{{ route('lihatProdukTerjual') }}">
-          <i class="material-symbols-rounded opacity-5">table_view</i>
+          <i class="material-symbols-rounded opacity-5">inventory</i>
           <span class="nav-link-text ms-1">Produk Terjual</span>
         </a>
       </li>
         @endif
-
-        {{-- <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/virtual-reality.html">
-            <i class="material-symbols-rounded opacity-5">view_in_ar</i>
-            <span class="nav-link-text ms-1">Virtual Reality</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/rtl.html">
-            <i class="material-symbols-rounded opacity-5">format_textdirection_r_to_l</i>
-            <span class="nav-link-text ms-1">RTL</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/notifications.html">
-            <i class="material-symbols-rounded opacity-5">notifications</i>
-            <span class="nav-link-text ms-1">Notifications</span>
-          </a>
-        </li>
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/profile.html">
-            <i class="material-symbols-rounded opacity-5">person</i>
-            <span class="nav-link-text ms-1">Profile</span>
-          </a>
-        </li> --}}
         <style>
             .btn-logout {
                 background: none; /* Hilangkan background */

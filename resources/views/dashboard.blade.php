@@ -24,32 +24,59 @@
           Status Saat Ini => {{ ucfirst(Auth::user()->role) }}
         </p>
       </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      @if (Auth::user()->role == 'admin')
+      <div class="col-xl-3 col-sm-6 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                <h4 class="mb-0">$53k</h4>
+                <p class="text-sm mb-0 text-capitalize">Menunggu Konfirmasi</p>
+                <h4 class="mb-0">
+                  @if($menungguKonfirmasi && $menungguKonfirmasi > 0)
+                    {{ $menungguKonfirmasi }}
+                  @else
+                    -
+                  @endif
+                </h4>
               </div>
               <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                <i class="material-symbols-rounded opacity-10">weekend</i>
+                <i class="material-symbols-rounded opacity-10">pending_actions</i>
               </div>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+55% </span>than last week</p>
+            <p class="mb-0 text-sm">Konfirmasi Pembayaran Pembeli</p>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+
+      <div class="col-xl-3 col-sm-6 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                <h4 class="mb-0">2300</h4>
+                <p class="text-sm mb-0 text-capitalize">Total Keuangan</p>
+                <h4 class="mb-0">Rp{{ $totalUang }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">attach_money</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Total Harga Keseluruhan Produk</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Jumlah Penjual</p>
+                <h4 class="mb-0">{{ $jumlahPenjual }}</h4>
               </div>
               <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
                 <i class="material-symbols-rounded opacity-10">person</i>
@@ -58,51 +85,292 @@
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3% </span>than last month</p>
+            <p class="mb-0 text-sm">Total Harga Keseluruhan Produk</p>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-3 col-sm-6 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="text-sm mb-0 text-capitalize">Ads Views</p>
-                <h4 class="mb-0">3,462</h4>
+                <p class="text-sm mb-0 text-capitalize">Jumlah Pembeli</p>
+                <h4 class="mb-0">{{ $jumlahPembeli }}</h4>
               </div>
               <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                <i class="material-symbols-rounded opacity-10">leaderboard</i>
+                <i class="material-symbols-rounded opacity-10">person</i>
               </div>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-danger font-weight-bolder">-2% </span>than yesterday</p>
+            <p class="mb-0 text-sm">Total Harga Keseluruhan Produk</p>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6">
+      <div class="col-xl-3 col-sm-6 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
               <div>
-                <p class="text-sm mb-0 text-capitalize">Sales</p>
-                <h4 class="mb-0">$103,430</h4>
+                <p class="text-sm mb-0 text-capitalize">Sedang Aktif</p>
+                <h4 class="mb-0">{{ $penggunaAktif }}</h4>
               </div>
               <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                <i class="material-symbols-rounded opacity-10">weekend</i>
+                <i class="material-symbols-rounded opacity-10">language</i>
               </div>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+5% </span>than yesterday</p>
+            <p class="mb-0 text-sm">Pengguna Sedang Aktif</p>
           </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Produk Tersedia</p>
+                <h4 class="mb-0">{{ $produkTersedia }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">content_paste</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Produk Belum Terjual</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Produk Terjual</p>
+                <h4 class="mb-0">{{ $produkTerjual }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">inventory</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Produk Terjual</p>
+          </div>
+        </div>
+      </div>
+    {{-- </div> --}}
+    <div class="col-xl-3 col-sm-6 mb-4">
+      <div class="card">
+        <div class="card-header p-2 ps-3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <p class="text-sm mb-0 text-capitalize">Kategori Akun</p>
+              <h4 class="mb-0">{{ $banyakAkun }}</h4>
+            </div>
+            <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+              <i class="material-symbols-rounded opacity-10">account_circle</i>
+            </div>
+          </div>
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm">Jumlah Kategori Akun</p>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mt-4 mb-4">
+    <div class="col-xl-3 col-sm-6 mb-4">
+      <div class="card">
+        <div class="card-header p-2 ps-3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <p class="text-sm mb-0 text-capitalize">Kategori Joki</p>
+              <h4 class="mb-0">{{ $banyakJoki }}</h4>
+            </div>
+            <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+              <i class="material-symbols-rounded opacity-10">show_chart</i>
+            </div>
+          </div>
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer p-2 ps-3">
+          <p class="mb-0 text-sm">Jumlah Kategori Joki</p>
+        </div>
+      </div>
+    </div>
+      @endif
+
+      @if (Auth::user()->role == 'penjual')
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Produk Tersedia</p>
+                <h4 class="mb-0">{{ $totalProdukSaya }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">content_paste</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Produk Belum Terjual</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Total Keuangan</p>
+                <h4 class="mb-0">Rp{{ $totalHargaProduk }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">attach_money</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Total Harga Keseluruhan Produk</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Total Pendapatan</p>
+                <h4 class="mb-0">Rp{{ $pendapatan }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">attach_money</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Total Harga Produk Terjual</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Kategori Akun</p>
+                <h4 class="mb-0">{{ $totalAkun }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">account_circle</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Kategori Akun</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Kategori Joki</p>
+                <h4 class="mb-0">{{ $totalJoki }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">show_chart</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Kategori Joki</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Produk Terjual</p>
+                <h4 class="mb-0">{{ $produkSold }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">inventory</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Jumlah Produk Terjual</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Joki</p>
+                <h4 class="mb-0">{{ $statusJoki }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">pending_actions</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Akun Belum Mulai Di Joki</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-header p-2 ps-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="text-sm mb-0 text-capitalize">Akun</p>
+                <h4 class="mb-0">{{ $produkBelumDikirim }}</h4>
+              </div>
+              <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                <i class="material-symbols-rounded opacity-10">pending_actions</i>
+              </div>
+            </div>
+          </div>
+          <hr class="dark horizontal my-0">
+          <div class="card-footer p-2 ps-3">
+            <p class="mb-0 text-sm">Akun Belum Dikirim</p>
+          </div>
+        </div>
+      </div>
+
+      
+      @endif
+
+   <div class="row">
+      {{-- <div class="col-lg-4 col-md-6 mt-4 mb-4">
         <div class="card">
           <div class="card-body">
             <h6 class="mb-0 ">Website Views</h6>
@@ -119,8 +387,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-6 mt-4 mb-4">
+      </div> --}}
+      {{-- <div class="col-lg-4 col-md-6 mt-4 mb-4">
         <div class="card ">
           <div class="card-body">
             <h6 class="mb-0 "> Daily Sales </h6>
@@ -155,8 +423,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> --}}
+    {{-- </div>
     <div class="row mb-4">
       <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
         <div class="card">
@@ -501,7 +769,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>  --}}
   </div>
 @endsection
 
